@@ -9,16 +9,16 @@ import org.junit.jupiter.api.Test;
 import hello.hellospring.domain.Member;
 import hello.hellospring.repository.MemoryMemberRepository;
 
-public class MemberSerivceTest {
-    
-    MemberSerivce memberSerivce;
+public class MemberServiceTest {
+   
+    MemberService memberService;
     MemoryMemberRepository memoryMemberRepository;
 
 
     @BeforeEach
     public void beforeEach() {
         memoryMemberRepository = new MemoryMemberRepository();
-        memberSerivce = new MemberSerivce(memoryMemberRepository);
+        memberService = new MemberService(memoryMemberRepository);
     }
 
     @AfterEach
@@ -34,10 +34,10 @@ public class MemberSerivceTest {
         member.setName("hello");
         
         //when
-        Long saveId = memberSerivce.join(member);
+        Long saveId = memberService.join(member);
 
         //then
-        Member findMember = memberSerivce.findOne(saveId).get();
+        Member findMember = memberService.findOne(saveId).get();
         Assertions.assertThat(findMember.getName()).isEqualTo(member.getName());
     }
 
@@ -51,10 +51,10 @@ public class MemberSerivceTest {
         member2.setName("spring");
 
         //when
-        memberSerivce.join(member);
+        memberService.join(member);
 
         //then
-        IllegalStateException e = org.junit.jupiter.api.Assertions.assertThrows(IllegalStateException.class, () -> memberSerivce.join(member2));
+        IllegalStateException e = org.junit.jupiter.api.Assertions.assertThrows(IllegalStateException.class, () -> memberService.join(member2));
         Assertions.assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
     
     }
